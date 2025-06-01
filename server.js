@@ -1,15 +1,8 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
-const {Server} = require('socket.io');
-const io = new Server(server);
 
-io.on('connection', (socket) => {
-    console.log('a user connected. id - ' + socket.id);
-    socket.on('new_message', (message) => {
-        io.emit('message', message);
-    });
-});
+
 
     const pathToIndex = fs.readFileSync(path.join(__dirname, 'static', 'index.html'));
     const pathToStyle =fs.readFileSync(path.join(__dirname, 'static', 'style.css'));
@@ -26,3 +19,26 @@ const server = http.createServer((req, res) =>{
 });
 
 server.listen(3000);
+
+
+const {Server} = require('socket.io');
+const io = new Server(server);
+
+
+
+
+io.on('connection', (socket) => {
+    console.log('a user connected. id - ' + socket.id);
+
+    let userNickname = 'admin';
+    let messages = await.db.getMessage();
+    
+
+    
+socket.emit('all_message', message)
+
+   socket.on('new_message', (message) => {
+    db.addMessage(message, 1)
+        io.emit('message', userNickname + ' : ' + message);
+   });
+});
